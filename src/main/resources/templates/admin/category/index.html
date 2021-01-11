@@ -1,0 +1,232 @@
+<div id="head" th:include="/admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+
+<div class="x-nav" >
+      <span class="layui-breadcrumb">
+        <a href="">首页</a>
+        <a href="">分类管理</a>
+        <a>
+          <cite>分类列表</cite></a>
+      </span>
+    <a class="layui-btn layui-btn-primary layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:38px">&#xe669;</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <div class="layui-form layui-col-md3" style="margin-right: 10px">
+            <select id="p_category" name="category">
+                <option value="0">顶级分类</option>
+                <span th:each="vo:${Category}"   lay-search xmlns:th="http://www.thymeleaf.org">
+                                    <option th:value="${vo.id}" th:text="${vo.name}">${vo.name}</option>
+                </span>
+
+
+            </select>
+        </div>
+        <div class="layui-form layui-col-md2" style="margin-right: 10px">
+            <input type="text" name="" id="category_name" class="layui-input" placeholder="栏目名">
+        </div>
+        <div class="layui-form layui-col-md2" style="margin-right: 10px">
+            <input type="text" name="" id="category_page" class="layui-input" placeholder="url名">
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-form-item">
+                <button class="layui-btn" lay-submit="" lay-filter="sreach" onclick="addCategory()"><i
+                        class="layui-icon"></i>增加
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--    <blockquote class="layui-elem-quote">每个tr 上有两个属性 cate-id='1' 当前分类id fid='0' 父级id ,顶级分类为 0，有子分类的前面加收缩图标<i-->
+    <!--            class="layui-icon x-show" status='true'>&#xe623;</i></blockquote>-->
+    <xblock xmlns:th="http://www.thymeleaf.org">
+        <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
+        <span class="x-right" style="line-height:40px " th:text="'共有数据:'+${Category.size()}+'条'"></span>
+    </xblock>
+    <table class="layui-table layui-form">
+        <thead>
+        <tr>
+            <th width="20">
+                <div class="layui-unselect header layui-form-checkbox" lay-skin="primary"><i
+                        class="layui-icon">&#xe605;</i></div>
+            </th>
+            <th width="70">ID</th>
+            <th>栏目名</th>
+            <th width="50">排序</th>
+            <th width="50">状态</th>
+            <th width="50">设置为单页</th>
+            <th width="280">操作</th>
+        </tr>
+
+        </thead>
+<!--        <option    th:value="${subject.code}" th:text="${subject.name}" xmlns:th="http://www.thymeleaf.org"></option>-->
+
+        <tbody class="x-cate">
+        <tr th:each="vo:${Category}" th:cate-id='${vo.id}' th:fid='${vo.pid}' xmlns:th="http://www.thymeleaf.org" >
+            <td>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i
+                        class="layui-icon">&#xe605;</i>
+                </div>
+            </td>
+            <td th:text="${vo.id}"></td>
+            <td>
+
+                <span th:if="${vo.pid} eq 0">
+                    <i class="layui-icon x-show" status='true'>&#xe623;</i>
+                    [[${vo.name}]]
+                </span>
+                <span th:if="${vo.pid} neq 0">
+                    &nbsp;&nbsp;&nbsp;&nbsp;├ [[${vo.name}]]
+                </span>
+
+                &nbsp;
+
+            </td>
+
+            <td><input type="text" th:onblur="'changeSort('+${vo.id}+', this.value'" class="layui-input x-sort"
+                       name="order"
+                       th:value="${vo.sort}"></td>
+            <td th:if="${vo.state} neq 1 " >
+
+
+                <input th:data-id="${vo.id}" type="checkbox" lay-filter="state" th:value="${vo.state}" name="switch"
+                       lay-text="开|关" lay-skin="switch"
+                       checked="">
+            </td>
+            <td th:if="${vo.state} eq 1 " >
+
+
+                <input th:data-id="${vo.id}" type="checkbox" lay-filter="state" th:value="${vo.state}" name="switch"
+                       lay-text="开|关" lay-skin="switch"
+                       checked="">
+            </td>
+            <td th:if="${vo.state} neq 1 " >
+
+
+            <input th:data-id="${vo.id}" type="checkbox" lay-filter="state" th:value="${vo.state}" name="switch"
+                   lay-text="开|关" lay-skin="switch"
+                  >
+            </td>
+            <td th:if="${vo.type} eq 1">
+                <input th:data-id="${vo.id}" type="checkbox" lay-filter="type" th:value="${vo.type}" name="switch"
+                       lay-text="开|关" lay-skin="switch"
+                       checked="" >
+            </td>
+            <td th:if="${vo.type} neq 1">
+                <input th:data-id="${vo.id}" type="checkbox" lay-filter="type" th:value="${vo.type}" name="switch"
+                       lay-text="开|关" lay-skin="switch"
+                        >
+            </td>
+            <td class="td-manage">
+                <button class="layui-btn layui-btn layui-btn-sm"
+                        th:onclick="'x_admin_show('+'编辑'+',/admin/category/edit/+'${vo.id}+')'"><i
+                        class="layui-icon">&#xe642;</i>
+                </button>
+                <button class="layui-btn-danger layui-btn layui-btn-sm" th:onclick="'member_del(this,'+${vo.id}+')'"
+                        href="javascript:;"><i class="layui-icon">&#xe640;</i>
+                </button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<script>
+    layui.use(['form'], function () {
+        form = layui.form;
+
+        form.on('switch(state)', function (data) {
+            let id = $(data.elem).attr('data-id')
+            let value = $(data.elem).val() === '1' ? 0 : 1;
+
+
+            $.post('/admin/category/changeState', {id, value}, res => {
+                if (res.code === 1) {
+                    layer.msg(res.msg, {icon: 6, time: 800}, () => location.reload())
+                } else {
+                    layer.msg(res.msg, {icon: 5, time: 1500})
+                }
+            })
+        })
+
+
+        form.on('switch(type)', function (data) {
+            let id = $(data.elem).attr('data-id')
+            let value = $(data.elem).val() === '1' ? 0 : 1;
+
+            $.post('/admin/category/setPage', {id, value}, res => {
+                if (res.code === 1) {
+                    layer.msg(res.msg, {icon: 6, time: 800}, () => location.reload())
+                } else {
+                    layer.msg(res.msg, {icon: 5, time: 1500})
+                }
+            })
+        });
+
+
+    })
+    ;
+
+    /*用户-删除*/
+    function member_del(obj, id) {
+        layer.confirm('确认要删除吗？', function (index) {
+            //发异步删除数据
+            $(obj).parents("tr").remove();
+            $.post('/admin/category/del', {id}, res => {
+                if (res.code === 1) {
+                    layer.msg(res.msg, {icon: 6, time: 1500}, () => {
+                        $(".layui-form-checked").not('.header').parents('tr').remove();
+                    })
+                } else {
+                    layer.msg(res.msg, {icon: 5, time: 1500})
+                }
+            })
+        });
+    }
+
+
+    function delAll(argument) {
+        var data = tableCheck.getData();
+        layer.confirm('确认要删除吗？' + data, function (index) {
+            $.post('/admin/category/del', {id: data}, res => {
+                if (res.code === 1) {
+                    layer.msg(res.msg, {icon: 6, time: 1500}, () => {
+                        $(".layui-form-checked").not('.header').parents('tr').remove();
+
+                    })
+                } else {
+                    layer.msg(res.msg, {icon: 5, time: 1500})
+                }
+            })
+        });
+    }
+
+    function addCategory() {
+        let data = {
+            pid: $("#p_category").val(),
+            name: $("#category_name").val(),
+            page: $("#category_page").val()
+        }
+        $.post('/admin/category/add', data, res => {
+            if (res.code === 1) {
+                layer.msg(res.msg, {icon: 6, time: 1500}, () => location.reload())
+            } else {
+                layer.msg(res.msg, {icon: 5, time: 1500})
+            }
+
+        })
+    }
+
+    function changeSort(id, sort) {
+        $.post('/admin/category/changeSort', {id, sort}, res => {
+            if (res.code === 1) {
+                layer.msg(res.msg, {icon: 6, time: 1500})
+            } else {
+                layer.msg(res.msg, {icon: 5, time: 1500})
+            }
+        })
+    }
+
+</script>
+<div id="footer" th:include="/admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
