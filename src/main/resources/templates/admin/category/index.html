@@ -64,7 +64,7 @@
         <tbody class="x-cate">
         <tr th:each="vo:${Category}" th:cate-id='${vo.id}' th:fid='${vo.pid}' xmlns:th="http://www.thymeleaf.org" >
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id='${vo.id}'><i
                         class="layui-icon">&#xe605;</i>
                 </div>
             </td>
@@ -189,7 +189,7 @@
     function delAll(argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？' + data, function (index) {
-            $.post('/admin/category/del', {id: data}, res => {
+            $.post('/admin/category/delall', {id: data}, res => {
                 if (res.code === 1) {
                     layer.msg(res.msg, {icon: 6, time: 1500}, () => {
                         $(".layui-form-checked").not('.header').parents('tr').remove();

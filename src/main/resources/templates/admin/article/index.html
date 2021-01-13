@@ -1,8 +1,7 @@
-{extend name="base/template"}
+<div id="head" th:include="/admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"
+ ></div>
 
-{block name="title"}文章列表{/block}
 
-{block name="content"}
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -39,10 +38,10 @@
             <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
         </form>
     </div>
-    <xblock>
+    <xblock  xmlns:th="http://www.thymeleaf.org">
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <a href="/admin/article/create" class="layui-btn"><i class="layui-icon"></i>添加</a>
-        <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+        <span class="x-right" style="line-height:40px" th:text="'共有数据:'+${article.size()}+'条'">#</span>
     </xblock>
     <table class="layui-table layui-form">
         <thead>
@@ -66,56 +65,75 @@
         <tbody>
 
 
-        {foreach $article as $key=>$vo}
-        <tr>
+        <tr th:each="vo:${article}"  xmlns:th="http://www.thymeleaf.org" >
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i class="layui-icon">&#xe605;</i>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" th:data-id='${vo.id}'><i class="layui-icon">&#xe605;</i>
                 </div>
             </td>
-            <td>{$vo.id}</td>
+            <td th:text="${vo.id}">#</td>
             <td>
                 <span onmouseover="$(this).hide(); $(this).next().show()" style="cursor: pointer;font-size: 16px;" >查看</span>
-                <img onmouseout="$(this).hide(); $(this).prev().show({ duration: 100})" id="pic" width="200" src="{$vo.pic}" alt="" style="display: none;" ></td>
-            <td>{$vo.title}</td>
-            <td style="max-width: 10em;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><p>{$vo.description}</p></td>
-            <td>{$vo.read}</td>
-            <td>{$vo.category.name}</td>
+                <img onmouseout="$(this).hide(); $(this).prev().show({ duration: 100})" id="pic" width="200" th:src="${vo.pic}" alt="" style="display: none;" ></td>
+            <td th:text="${vo.title}">{$vo.title}</td>
+            <td style="max-width: 10em;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;"><p th:text="${vo.description}">{$vo.description}</p></td>
+            <td th:text="${vo.read}">{$vo.read}</td>
+            <td th:text="${vo.category_id}">{$vo.category.name}</td>
             <td>
-                <input {if $vo.state eq 1} checked {/if} lay-text="开|关" type="checkbox" data-id="{$vo.id}" name="switch" value="{$vo.state}"
-                lay-skin="switch"
-                lay-filter="state">
+
+                <span th:if="${vo.state} neq 1">
+                             <input  lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" th:value="${vo.state}"
+                                    lay-skin="switch"
+                                    lay-filter="state">
+                         </span>
+                <span th:if="${vo.state} eq 1">
+                             <input checked  lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" th:value="${vo.state}"
+                                     lay-skin="switch"
+                                     lay-filter="state">
+                         </span>
+
+
             </td>
             <td>
-                <input {if $vo.top eq 1} checked {/if} lay-text="开|关" type="checkbox" data-id="{$vo.id}" name="switch" value="{$vo.top}"
-                lay-skin="switch"
-                lay-filter="top">
+                         <span th:if="${vo.top} eq 1">
+                             <input checked lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" th:value="${vo.top}"
+                             lay-skin="switch"
+                            lay-filter="top">
+                         </span>
+                        <span th:if="${vo.top} neq 1">
+                             <input  lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" th:value="${vo.top}"
+                                    lay-skin="switch"
+                                    lay-filter="top">
+                         </span>
+
             </td>
-            <td>{$vo.create_time}</td>
+            <td th:text="${vo.createTime}">{$vo.create_time}</td>
             <td class="td-manage">
                 <a title="查看" class="layui-btn  layui-btn-xs" onclick="x_admin_show('查看','/admin/article/view')" href="javascript:;">
                     <i class="layui-icon">&#xe63c;</i>
                 </a>
-                <a title="编辑" class="layui-btn layui-btn-xs" onclick="x_admin_show('编辑', '/admin/article/edit/{$vo.id}')" href="javascript:;">
+
+                <a title="编辑" class="layui-btn layui-btn-xs" th:onclick="'edit_albert(' + ${vo.id} + ')'" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" class="layui-btn layui-btn-danger layui-btn-xs" onclick="del(this,'{$vo.id}')" href="javascript:;">
+                <a title="删除" class="layui-btn layui-btn-danger layui-btn-xs" th:onclick="'del(this,'+${vo.id}+')'" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
         </tr>
-        {/foreach}
+
         </tbody>
     </table>
     <div class="page">
-        {$article|raw}
+
     </div>
 
 </div>
-{/block}
 
-{block name="script"}
 <script>
 
+    function  edit_albert(id){
+        x_admin_show('编辑','/admin/article/edit/' +  id)
+    }
     layui.use(['form'], function () {
         let form = layui.form
         form.on('switch(state)', function (data) {
@@ -168,7 +186,7 @@
     function delAll(argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？' + data, function (index) {
-            $.post('/admin/article/del', {id: data}, res => {
+            $.post('/admin/article/delall', {id: data}, res => {
                 if (res.code === 1) {
                     layer.msg(res.msg, {icon: 6, time: 1500}, () => {
                         $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -180,4 +198,5 @@
         });
     }
 </script>
-{/block}
+<div id="footer" th:include="/admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+

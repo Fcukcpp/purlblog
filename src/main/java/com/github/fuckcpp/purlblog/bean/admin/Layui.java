@@ -17,4 +17,7 @@ public class Layui
 {
 private  String msg;
 private  int code;
+private  String date;
+private  String url;
+private  Integer wait;
 }
