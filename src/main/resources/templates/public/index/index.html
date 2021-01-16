@@ -1,38 +1,41 @@
-{extend name="base:template"}
+<div id="head" th:include="public/base/head :: public_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="content"}
 <section class="blog-posts">
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="all-blog-posts">
-                    <div class="row">
-                        {foreach $article as $key=>$vo}
+                    <div class="row" th:each="vo,iterStat:${config.article}">
+<!--                        {foreach $article as $key=>$vo}-->
                         <div class="col-lg-12">
                             <div class="blog-post">
                                 <div class="blog-thumb">
-                                    <img src="{$vo.pic}" alt="">
+                                    <img th:src="${vo.pic}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <span class="cate">{$vo.category.name}</span>
-                                    <a href="/info/{$vo.id}.html"><h4>{$vo.title}</h4></a>
+                                    <span class="cate" th:text="${config.category.get(iterStat.index).name}">
+                                        {vo.category.name}</span>
+                                    <a href="/info/{$vo.id}.html"><h4 th:text="${vo.title}"></h4></a>
                                     <ul class="post-info">
-                                        <li><a href="#">@ &nbsp;{$vo.admin.nickname}</a></li>
-                                        <li><a href="#"><i class="fa fa-clock-o"></i> &nbsp;{$vo.create_time}</a></li>
-                                        <li><a href="#"><i class="fa fa-comment-o"></i> &nbsp;{:count($vo.comments)}</a></li>
-                                        <li><a href="#"><i class="fa fa-eye"></i> &nbsp;{$vo.read}</a></li>
+                                        <li><a href="#" th:text="${config.admin.get(iterStat.index).nickname}">admin.nickname</a></li>
+                                        <li><a href="#" th:text="${vo.createTime}"><i class="fa fa-clock-o"></i > &nbsp;{$vo.create_time}</a></li>
+<!--                                        <li><a href="#" th:text="${config.comments.get(1)}"><i class="fa fa-comment-o"></i > &nbsp;{:count($vo.comments)}</a></li>-->
+                                        <li><a href="#"  th:text="${vo.read}"
+                                        ><i class="fa fa-eye"></i > &nbsp;{$vo.read}</a></li>
                                     </ul>
-                                    <p class="down-content-line">{$vo.description | raw}</p>
+                                    <p class="down-content-line" th:text="${vo.description}">{$vo.description | raw}</p>
                                     <div class="post-options">
                                         <div class="row">
                                             <div class="col-6">
                                                 <ul class="post-tags">
                                                     <li><i class="fa fa-tags"></i></li>
-                                                    {foreach :explode(',', $vo.tag) as $k=>$v}
-                                                    <li><a href="#">{$v}</a>{$k + 1 < count(explode(',', $vo.tag)) ? ',
-                                                        ' : ''}
+
+                                                    <span th:each="tag:${tags}">
+                                                     <li><a href="#" th:text="${tag}">{$v}</a>
                                                     </li>
-                                                    {/foreach}
+                                                    </span>
+
+<!--                                                    {/foreach}-->
                                                 </ul>
                                             </div>
                                         </div>
@@ -40,16 +43,23 @@
                                 </div>
                             </div>
                         </div>
-                        {/foreach}
+<!--                        {/foreach}-->
 
-                        {if empty($article[0])}
-                        <div class="col-lg-12">
-                            {include title="没有任何东西! ʕ•ﻌ•ʔ " description="" file="page:404"}
+<!--                        {if empty($article[0])}-->
+
+                        <span th:if="${config.category.isEmpty()}">
+
+                        <div class="col-lg-12" >
+                            <div id="404" th:include="public/base/404 :: public_404" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+
+<!--                            {include title="没有任何东西! ʕ•ﻌ•ʔ " description="" file="page:404"}-->
                         </div>
-                        {/if}
+                        </span>
 
-                        {if empty($article[0])}
-                        <div class="col-lg-12 page">
+<!--                        {/if}-->
+
+<!--                        {if empty($article[0])}-->
+                        <div class="col-lg-12 page" th:if="${config.category.isEmpty()}">
                             <div class="left">
                                 {if $page.current_page neq 1}
                                 {if $page.current_page >= $page.per_page}
@@ -69,12 +79,14 @@
                                 {/if}
                             </div>
                         </div>
-                        {/if}
+<!--                        {/if}-->
                     </div>
                 </div>
             </div>
-            {include file="base:right"}
+            <div id="right" th:include="public/base/right :: public_right" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+
         </div>
     </div>
 </section>
-{/block}
+<div id="footer" th:include="public/base/footer :: public_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+

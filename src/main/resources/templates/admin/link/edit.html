@@ -1,14 +1,12 @@
-{extend name="base/template"}
-{block name="title"}链接修改{/block}
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="content"}
 <div class="x-body">
     <form class="layui-form" action="">
 
         <div class="layui-form-item">
             <label class="layui-form-label">标题：</label>
             <div class="layui-input-block">
-                <input type="text" name="title" value="{$link.title}" required lay-verify="required"
+                <input type="text" name="title" th:value="${link.title}" required lay-verify="required"
                        placeholder="请输入链接名称" autocomplete="off"
                        class="layui-input">
             </div>
@@ -17,7 +15,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">描述：</label>
             <div class="layui-input-block">
-                <input type="text" name="description"  value="{$link.description}" required lay-verify="required"
+                <input type="text" name="description"  th:value="${link.description}" required lay-verify="required"
                        placeholder="请输入链接描述" autocomplete="off"
                        class="layui-input">
             </div>
@@ -26,7 +24,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">LOGO地址：</label>
             <div class="layui-input-block">
-                <input type="text" name="logo" value="{$link.logo}"  required lay-verify="required"
+                <input type="text" name="logo" th:value="${link.logo}"  required lay-verify="required"
                        placeholder="请输入链接地址" autocomplete="off"
                        class="layui-input">
             </div>
@@ -35,13 +33,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">链接地址：</label>
             <div class="layui-input-block">
-                <input type="text" name="link" value="{$link.link}" required lay-verify="required"
+                <input type="text" name="link" th:value="${link.link}" required lay-verify="required"
                        placeholder="请输入链接地址" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
 
-        <input type="hidden" name="id" value="{$link.id}">
+        <input type="hidden" name="id" th:value="${link.id}">
 
         <div class="layui-form-item">
             <div class="layui-input-block">
@@ -50,9 +48,7 @@
         </div>
     </form>
 </div>
-{/block}
 
-{block name="script"}
 <script>
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
@@ -80,4 +76,4 @@
 
     });
 </script>
-{/block}
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

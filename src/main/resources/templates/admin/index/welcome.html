@@ -1,4 +1,4 @@
-<div id="head" th:include="/admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
 <div class="x-body layui-anim layui-anim-up">
     <!--    <blockquote class="layui-elem-quote">欢迎管理员：-->
@@ -70,35 +70,35 @@
                 <tbody>
                 <tr>
                     <th>PureBlog版本</th>
-                    <td>{$pure_blog_version}</td>
+                    <td th:text="${arch.pureBlogversion}">{$pure_blog_version}</td>
                 </tr>
                 <tr>
                     <th>服务器地址</th>
-                    <td>{:request()->domain()}</td>
+                    <td th:text="${arch.domainname}">{:request()->domain()}</td>
                 </tr>
                 <tr>
                     <th>操作系统</th>
-                    <td>{:php_uname('s');}</td>
+                    <td th:text="${arch.osname}">{:php_uname('s');}</td>
                 </tr>
                 <tr>
-                    <th>运行环境</th>
-                    <td>{$_SERVER["SERVER_SOFTWARE"]}</td>
+                    <th>java版本</th>
+                    <td th:text="${arch.javaversion}">{$_SERVER["SERVER_SOFTWARE"]}</td>
                 </tr>
                 <tr>
-                    <th>PHP版本</th>
-                    <td>{$php_version}</td>
+                    <th >Mysql版本</th>
+                    <td th:text="${arch.mysqlversion}">{$php_version}</td>
                 </tr>
                 <tr>
-                    <th>PHP运行方式</th>
-                    <td>{:php_sapi_name()}</td>
+                    <th>PID</th>
+                    <td th:text="${arch.PID}">{:php_sapi_name()}</td>
                 </tr>
                 <tr>
-                    <th>MYSQL版本</th>
-                    <td>{$mysql_version}</td>
+                    <th>springboot版本</th>
+                    <td th:text="${arch.springbootversion}">{$mysql_version}</td>
                 </tr>
                 <tr>
-                    <th>ThinkPHP</th>
-                    <td>{$Think.VERSION}</td>
+                    <th>图片资源路径</th>
+                    <td th:text="${arch.filepath}">{$Think.VERSION}</td>
                 </tr>
                 <tr>
                     <th>上传附件限制</th>
@@ -131,4 +131,4 @@
     </fieldset>
 <!--    <blockquote class="layui-elem-quote layui-quote-nm">感谢layui,百度Echarts,jquery,本系统由L-admin提供技术支持。</blockquote>-->
 </div>
-<div id="footer" th:include="/admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

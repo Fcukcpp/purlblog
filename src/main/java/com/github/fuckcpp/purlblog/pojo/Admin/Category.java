@@ -1,4 +1,4 @@
-package com.github.fuckcpp.purlblog.bean.admin;/*
+package com.github.fuckcpp.purlblog.pojo.Admin;/*
 作者Crying711
 日期:2021/1/11
 时间:21:43
@@ -7,16 +7,10 @@ package com.github.fuckcpp.purlblog.bean.admin;/*
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import java.util.Date;
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-@Builder
+@AllArgsConstructor @NoArgsConstructor @ToString @Builder
 @TableName("t_category")
 public class Category {
     @TableId(type = IdType.AUTO)

@@ -1,6 +1,5 @@
-{extend name="base/template"}
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="content"}
 <div class="x-body">
     <form class="layui-form">
         <div class="layui-form-item">
@@ -8,7 +7,7 @@
                 <span class="x-red">*</span>用户名
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" value="{$user.username}" disabled required
+                <input type="text" id="username" name="username" th:value="${user.username}" disabled required
                        lay-verify="required"
                        autocomplete="off" class="layui-input">
             </div>
@@ -22,7 +21,7 @@
             </label>
             <div class="layui-input-inline">
                 <input type="password" id="L_pass" name="password" required lay-verify="pass"
-                       autocomplete="off" class="layui-input">
+                       autocomplete="off" class="layui-input" th:value="${user.password}">
             </div>
             <div class="layui-form-mid layui-word-aux">
                 6到16个字符
@@ -34,7 +33,7 @@
                 <span class="x-red">*</span>昵称
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="nickname" value="{$user.nickname}" name="nickname" required
+                <input type="text" id="nickname" th:value="${user.nickname}" name="nickname" required
                        lay-verify="required"
                        autocomplete="off" class="layui-input">
             </div>
@@ -46,11 +45,11 @@
                 <span class="x-red">*</span>邮箱
             </label>
             <div class="layui-input-inline">
-                <input type="text" id="L_email" name="email" value="{$user.email}" required lay-verify="email"
+                <input type="text" id="L_email" name="email" th:value="${user.email}" required lay-verify="email"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
-        <input type="hidden" name="id" value="{$user.id}">
+        <input type="hidden" name="id" th:value="${user.id}">
 
 
         <div class="layui-form-item">
@@ -62,8 +61,7 @@
         </div>
     </form>
 </div>
-{/block}
-{block name="script"}
+
 <script>
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
@@ -88,4 +86,4 @@
         });
     });
 </script>
-{/block}
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

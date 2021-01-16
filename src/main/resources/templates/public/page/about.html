@@ -1,6 +1,5 @@
-{extend name="base:template"}
+<div id="head" th:include="public/base/head :: public_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="meta"}
 <meta name="description" content="关于Muxi_k">
 <meta name="keywords" content="muxi,muxik,muxi_k,muxik关于">
 {/block}
@@ -68,9 +67,15 @@
 {/block}
 
 {block name="style"}
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
 
-<link rel="stylesheet" href="__ADMIN__/lib/editor/css/editormd.preview.css">
+
+
+>
+
+<link rel="stylesheet" href="__ADMIN__/lib/editor/css/editormd.preview.css"
+      th:href="@{{path}/static/admin/lib/editor/css/editormd.preview.css(path=${#servletContext.getContextPath()})}"
+>
 <link rel="stylesheet" href="//highlightjs.org/static/demo/styles/gruvbox-dark.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-{/block}
+<div id="right" th:include="public/base/footer :: public_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

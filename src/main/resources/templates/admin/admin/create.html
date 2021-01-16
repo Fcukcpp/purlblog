@@ -1,6 +1,5 @@
-{extend name="base/template"}
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="content"}
 <div class="x-body">
     <form class="layui-form">
         <div class="layui-form-item">
@@ -59,8 +58,6 @@
         </div>
     </form>
 </div>
-{/block}
-{block name="script"}
 <script>
     layui.use(['form', 'layer'], function () {
         $ = layui.jquery;
@@ -88,4 +85,4 @@
     })
     ;
 </script>
-{/block}
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

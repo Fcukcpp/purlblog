@@ -4,6 +4,7 @@ package com.github.fuckcpp.purlblog.Controller.Admin.Login;/*
 时间:13:30
 */
 
+import com.github.fuckcpp.purlblog.Constant.Serverconfig;
 import com.github.fuckcpp.purlblog.Maper.AdminMapper;
 import com.github.fuckcpp.purlblog.Utils.MD5Location;
 import com.github.fuckcpp.purlblog.bean.Login;
@@ -38,7 +39,7 @@ public class LoginController
 
     @ResponseBody
     @PostMapping("/login.do")
-    public com.github.fuckcpp.purlblog.bean.admin.Login LoginDO(Login login,HttpServletRequest request)
+    public com.github.fuckcpp.purlblog.pojo.Admin.Login LoginDO(Login login, HttpServletRequest request)
     {
 
         String code =request.getSession().getAttribute("code").toString();
@@ -50,12 +51,13 @@ public class LoginController
                 String isadmin = adminMapper.Isadmin(login.getUsername(), MD5Location.getMd5(login.getPassword()));
                 if (isadmin !=null)
                 {
-                    return new com.github.fuckcpp.purlblog.bean.admin.Login("登录成功", "https://www.baidu.com/s", 1);
+                    request.getSession().setAttribute("username",login.getUsername());
+                    return new com.github.fuckcpp.purlblog.pojo.Admin.Login("登录成功", Serverconfig.DOMAINNAME+"/admin/index", 1);
                 }
                 }
 
         }
-        return  new com.github.fuckcpp.purlblog.bean.admin.Login("登录失败","https://www.baidu.com/",0);
+        return  new com.github.fuckcpp.purlblog.pojo.Admin.Login("登录失败", Serverconfig.DOMAINNAME+"/admin/login",0);
 
     }
 
@@ -84,5 +86,15 @@ public class LoginController
         g.drawLine(1,1,30,30);
         ImageIO.write(bufferedImage,"jpg",response.getOutputStream());
     }
+
+
+    @GetMapping("/out")
+    public  String out(HttpServletRequest request)
+    {
+        request.getSession().setAttribute("username",null);
+        return  "/";
+
+    }
+
 
 }

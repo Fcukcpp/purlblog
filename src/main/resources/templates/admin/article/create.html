@@ -1,4 +1,4 @@
-<div id="head" th:include="/admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
 <link rel="stylesheet" href="#" xmlns:th="http://www.thymeleaf.org"
       th:href="@{{path}/static/admin/lib/editor/css/editormd.css(path=${#servletContext.getContextPath()})}">
@@ -174,5 +174,5 @@
 
     });
 </script>
-<div id="footer" th:include="/admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 

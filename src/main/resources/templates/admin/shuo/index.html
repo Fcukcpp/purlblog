@@ -1,8 +1,5 @@
-{extend name="base/template"}
+<div id="head" th:include="admin/base/head :: common_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="title"}链接列表{/block}
-
-{block name="content"}
 <div class="x-nav">
       <span class="layui-breadcrumb">
         <a href="">首页</a>
@@ -24,7 +21,7 @@
     <xblock>
         <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
         <a onclick="x_admin_show('添加', '/admin/shuo/create')" class="layui-btn"><i class="layui-icon"></i>添加</a>
-        <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+        <span class="x-right" style="line-height:40px" th:text="'总共数据:'+${shuo.size()+'条'}">共有数据：{$count} 条</span>
     </xblock>
     <table class="layui-table layui-form">
         <thead>
@@ -43,41 +40,54 @@
         <tbody>
 
 
-        {foreach $link as $key=>$vo}
-        <tr>
+<!--        {foreach $link as $key=>$vo}-->
+        <tr th:each="vo:${shuo}" xmlns:th="http://www.w3.org/1999/xhtml">
             <td>
-                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i class="layui-icon">&#xe605;</i>
+                <div class="layui-unselect layui-form-checkbox" lay-skin="primary" data-id='${vo.id}'><i class="layui-icon">&#xe605;</i>
                 </div>
             </td>
-            <td>{$vo.id}</td>
-            <td>{$vo.content}</td>
+            <td th:text="${vo.id}">{$vo.id}</td>
+            <td th:text="${vo.content}"> {$vo.content}</td>
             <td>
-                <input {if $vo.state eq 1} checked {/if} lay-text="开|关" type="checkbox" data-id="{$vo.id}" name="switch" value="{$vo.state}"
+                <span th:if="${vo.state} eq 1">
+
+                        <input  checked  lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" value="{$vo.state}"
                 lay-skin="switch"
                 lay-filter="state">
+                </span>
+                <span th:if="${vo.state} neq 1">
+
+                        <input  lay-text="开|关" type="checkbox" th:data-id="${vo.id}" name="switch" value="{$vo.state}"
+                                lay-skin="switch"
+                                lay-filter="state">
+                </span>
             </td>
-            <td>{$vo.create_time}</td>
+            <td th:text="${vo.createTime}">{$vo.create_time}</td>
             <td class="td-manage">
-                <a title="编辑" class="layui-btn layui-btn-xs" onclick="x_admin_show('编辑', '/admin/shuo/edit/{$vo.id}')" href="javascript:;">
+                <a title="编辑" class="layui-btn layui-btn-xs" th:onclick="'edit_shuo('+${vo.id}+')'" href="javascript:;">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" class="layui-btn layui-btn-danger layui-btn-xs" onclick="del(this,'{$vo.id}')" href="javascript:;">
+                <a title="删除" class="layui-btn layui-btn-danger layui-btn-xs" th:onclick="'del(this,'+${vo.id}+')'" href="javascript:;">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
         </tr>
-        {/foreach}
+
         </tbody>
     </table>
     <div class="page">
-        {$link|raw}
+
     </div>
 
 </div>
-{/block}
 
-{block name="script"}
 <script>
+
+    function  edit_shuo(id)
+    {
+        x_admin_show('编辑', '/admin/shuo/edit/'+id);
+    }
+
 
     layui.use(['form'], function () {
         let form = layui.form
@@ -118,7 +128,7 @@
     function delAll(argument) {
         var data = tableCheck.getData();
         layer.confirm('确认要删除吗？' + data, function (index) {
-            $.post('/admin/shuo/del', {id: data}, res => {
+            $.post('/admin/shuo/delall', {id: data}, res => {
                 if (res.code === 1) {
                     layer.msg(res.msg, {icon: 6, time: 1500}, () => {
                         $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -130,5 +140,6 @@
         });
     }
 </script>
-{/block}
+<div id="footer" th:include="admin/base/footer :: common_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>
+
 

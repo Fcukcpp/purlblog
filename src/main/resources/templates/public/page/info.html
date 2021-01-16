@@ -1,13 +1,14 @@
-{extend name="base:template"}
+<!--{extend name="base:template"}-->
+<div id="head" th:include="public/base/head :: public_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="title"}{$info.title}{/block}
+<!--{block name="title"}{$info.title}{/block}-->
 
-{block name="meta"}
+<!--{block name="meta"}-->
 <meta name="description" content="{$info.descrtion}">
 <meta name="keywords" content="{$info.descrtion}">
-block}
+<!--block}-->
 
-{block name="content"}
+<!--{block name="content"}-->
 
 <section class="blog-posts grid-system">
     <div class="container">
@@ -21,12 +22,13 @@ block}
                                     <img src="{$info.pic}" alt="">
                                 </div>
                                 <div class="down-content">
-                                    <span class="cate">{$info.category.name}</span>
-                                    <a href="{:request()->url()}"><h4>{$info.title}</h4></a>
+                                    <span class="cate" th:text="${category.name}">{category.name}</span>
+                                    <a href="{:request()->url()}" #{article.title} ><h4>{$info.title}</h4></a>
                                     <ul class="post-info">
-                                        <li><a href="#">{$info.admin.nickname}</a></li>
-                                        <li><a href="#">{$info.create_time}</a></li>
-                                        <li><a href="#">{:count($comment)} Comments</a></li>
+                                        <li><a href="#" th:text="${admin.nickname}">{$info.admin.nickname}</a></li>
+                                        <li><a href="#" th:text="${article.createTime
+                                                                    }">{$info.create_time}</a></li>
+                                        <li><a href="#" >{:count($comment)} Comments</a></li>
                                     </ul>
                                     <!--                                    <p class="down-content-line"></p>-->
 
@@ -73,16 +75,21 @@ block}
 
 {block name="script"}
 <!--<script src="http://editor.md.ipandao.com/examples/js/jquery.min.js"></script>-->
-<script src="__ADMIN__/lib/editor/lib/marked.min.js"></script>
-<script src="__ADMIN__/lib/editor/lib/prettify.min.js"></script>
+<script src="__ADMIN__/lib/editor/lib/marked.min.js"
 
-<script src="__ADMIN__/lib/editor/lib/raphael.min.js"></script>
-<script src="__ADMIN__/lib/editor/lib/underscore.min.js"></script>
-<script src="__ADMIN__/lib/editor/lib/sequence-diagram.min.js"></script>
-<script src="__ADMIN__/lib/editor/lib/flowchart.min.js"></script>
-<script src="__ADMIN__/lib/editor/lib/jquery.flowchart.min.js"></script>
+th:src="@{{path}static/static/admin/lib/editor/lib/marked.min.js(path=${#servletContext.getContextPath()})}"
 
-<script src="__ADMIN__/lib/editor/editormd.js"></script>
+
+></script>
+<script th:src="@{{path}static/admin/lib/editor/lib/prettify.min.js(path=${#servletContext.getContextPath()})}"></script>
+
+<script th:src="@{{path}static/admin/lib/editor/lib/raphael.min.js(path=${#servletContext.getContextPath()})}"></script>
+<script th:src="@{{path}static/admin/lib/editor/lib/underscore.min.js(path=${#servletContext.getContextPath()})}"></script>
+<script th:src="@{{path}static/admin/lib/editor/lib/sequence-diagram.min.js(path=${#servletContext.getContextPath()})}"></script>
+<script th:src="@{{path}static/admin/lib/editor/lib/flowchart.min.js(path=${#servletContext.getContextPath()})}"></script>
+<script th:src="@{{path}static/admin/lib/editor/lib/jquery.flowchart.min.js(path=${#servletContext.getContextPath()})}"></script>
+
+<script th:src="@{{path}static/admin/lib/editor/editormd.js(path=${#servletContext.getContextPath()})}"></script>
 <script>
 
     content = $('#source').html();

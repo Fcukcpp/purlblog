@@ -1,23 +1,22 @@
-package com.github.fuckcpp.purlblog.bean.admin;/*
+package com.github.fuckcpp.purlblog.pojo.Admin;/*
 作者Crying711
 日期:2021/1/11
 时间:19:44
 */
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Layui
+public class Login
 {
+
+
 private  String msg;
-private  int code;
-private  String date;
 private  String url;
-private  Integer wait;
+private  int code;
+
 }

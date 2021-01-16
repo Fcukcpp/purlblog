@@ -38,8 +38,8 @@
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
             <a href="javascript:;">
-                <img src="https://gravatar.loli.net/avatar/{$head}" class="layui-nav-img">
-                {$admin.nickname}
+                <img src="https://gravatar.loli.net/avatar/{$head}" class="layui-nav-img" th:text="${session.username}">
+
             </a>
             <dl class="layui-nav-child"> <!-- 二级菜单 -->
                 <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>

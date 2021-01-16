@@ -5,14 +5,12 @@ package com.github.fuckcpp.purlblog.Controller.Admin.category;/*
 */
 
 import com.github.fuckcpp.purlblog.Service.CategoryService;
-import com.github.fuckcpp.purlblog.bean.admin.Category;
+import com.github.fuckcpp.purlblog.pojo.Admin.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 

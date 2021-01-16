@@ -5,13 +5,14 @@ package com.github.fuckcpp.purlblog.Maper;/*
 */
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.github.fuckcpp.purlblog.bean.Admin;
-import com.github.fuckcpp.purlblog.bean.admin.Category;
+import com.github.fuckcpp.purlblog.pojo.Admin.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Mapper
@@ -35,4 +36,9 @@ public interface CategoryMapper extends BaseMapper<Category> {
      */
     @Update("update t_category set state =#{state} where id =#{id}")
     public Boolean changeState(@Param("id") Integer id, @Param("state")Integer value) ;
+
+
+    @Select("select  * from t_category where state > 0 and  type = 0;")
+    public  List<Category> Reception();
+
 }

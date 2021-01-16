@@ -5,12 +5,9 @@ package com.github.fuckcpp.purlblog.Service.impl;/*
 */
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.github.fuckcpp.purlblog.Maper.AdminMapper;
 import com.github.fuckcpp.purlblog.Maper.CategoryMapper;
-import com.github.fuckcpp.purlblog.Service.AdminService;
 import com.github.fuckcpp.purlblog.Service.CategoryService;
-import com.github.fuckcpp.purlblog.bean.Admin;
-import com.github.fuckcpp.purlblog.bean.admin.Category;
+import com.github.fuckcpp.purlblog.pojo.Admin.Category;
 import org.springframework.stereotype.Service;
 
 @Service

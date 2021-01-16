@@ -1,13 +1,12 @@
-{extend name="base:template"}
+<div id="head" th:include="public/base/head :: public_head" xmlns:th="http://www.w3.org/1999/xhtml"></div>
 
-{block name="meta"}
 <meta name="description" content="Muxi_k's Blog">
 <meta name="keywords" content="muxi,muxik,muxi_k,muxik关于">
-{/block}
-{block name="title"}友人{/block}
+<!--{/block}-->
+<!--{block name="title"}友人{/block}-->
 
 
-{block name="content"}
+<!--{block name="content"}-->
 <section class="blog-posts grid-system">
     <div class="container">
         <div class="row">
@@ -21,32 +20,44 @@
                                         <div class="links">
                                             <div class="link-me">
                                                 <div class="link-title">
-                                                    <strong>在那可以找到我?</strong>
+                                                    <strong>如果相逢是一道风景!</strong>
                                                 </div>
                                                 <div class="link-body">
-                                                    {foreach $connect as $key=>$vo}
-                                                    <div class="link-item">
-                                                        <a href="{$vo.link}" title="{$vo.description}" target="_blank">
-                                                            <img src="{$vo.logo}" alt="消失">
-                                                            <span style="color: rgb({:mt_rand(1,222)},{:mt_rand(1,155)},{:mt_rand(1,185)})">{$vo.title}</span>
+<!--                                                    {foreach $connect as $key=>$vo}-->
+
+                                                    <span th:each="vos:${Links}">
+                                                                  <div class="link-item">
+                                                        <a th:href="${vos.link}" th:title="${vos.description}" target="_blank">
+                                                            <img th:src="${vos.logo}" alt="消失">
+                                                            <span style="color: rgb({:mt_rand(1,222)},{:mt_rand(1,155)},{:mt_rand(1,185)})" th:text="${vos.title}">{$vo.title}</span>
                                                         </a>
                                                     </div>
-                                                    {/foreach}
+                                                    </span>
+
+
+<!--                                                    {/foreach}-->
                                                 </div>
                                             </div>
                                             <div class="link-friend">
                                                 <div class="link-title">
-                                                    <strong>如果相逢是一道风景!</strong>
+                                                    <strong> 在哪里可以找到我</strong>
                                                 </div>
                                                 <div class="link-body">
-                                                    {foreach $link as $key=>$vo}
-                                                    <div class="link-item">
-                                                        <a href="{$vo.link}" title="{$vo.description}" target="_blank">
-                                                            <img src="{$vo.logo}" alt="消失">
-                                                            <span style="color: rgb({:mt_rand(1,255)},{:mt_rand(1,255)},{:mt_rand(1,255)})">{$vo.title}</span>
+                                                    <span
+                                                     th:each="vo:${linkss}"
+                                                    >
+
+                                                                    <div class="link-item">
+                                                        <a th:href="${vo.link}" th:title="${vo.description}" target="_blank">
+                                                            <img th:src="${vo.logo}" alt="消失">
+                                                            <span style="color: rgb({:mt_rand(1,255)},{:mt_rand(1,255)},{:mt_rand(1,255)})" th:text="${vo.title}"></span>
                                                         </a>
                                                     </div>
-                                                    {/foreach}
+
+                                                    </span>
+
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -55,7 +66,7 @@
                                 <span>与我相逢？&nbsp;<a href="/about.html">点此查看友链申请说明！</a></span>
                             </div>
                         </div>
-                        {include file="base:comment" name="page_id" value="2" comment="comment"}
+<!--                        {include file="base:comment" name="page_id" value="2" comment="comment"}-->
                     </div>
                 </div>
             </div>
@@ -63,14 +74,19 @@
     </div>
 </section>
 <div id="source" style="display: none"> {include file="source/about"}</div>
-{/block}
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
 
 
-{block name="style"}
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+>
 
 
-<link rel="stylesheet" href="__ADMIN__/lib/editor/css/editormd.preview.css">
+<link rel="stylesheet" href="__ADMIN__/lib/editor/css/editormd.preview.css"
+      th:href="@{{path}/static/admin/lib/editor/css/editormd.preview.css(path=${#servletContext.getContextPath()})}"
+
+>
 <link rel="stylesheet" href="//highlightjs.org/static/demo/styles/gruvbox-dark.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-{/block}
+
+<div id="right" th:include="public/base/footer :: public_footer" xmlns:th="http://www.w3.org/1999/xhtml"></div>

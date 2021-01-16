@@ -7,8 +7,8 @@ package com.github.fuckcpp.purlblog.Controller.Admin.category;/*
 import com.github.fuckcpp.purlblog.Constant.Serverconfig;
 import com.github.fuckcpp.purlblog.Maper.CategoryMapper;
 import com.github.fuckcpp.purlblog.Service.CategoryService;
-import com.github.fuckcpp.purlblog.bean.admin.Category;
-import com.github.fuckcpp.purlblog.bean.admin.Layui;
+import com.github.fuckcpp.purlblog.pojo.Admin.Category;
+import com.github.fuckcpp.purlblog.pojo.Admin.Layui;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

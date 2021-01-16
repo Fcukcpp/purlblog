@@ -7,7 +7,7 @@ package com.github.fuckcpp.purlblog.Service.impl;/*
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.fuckcpp.purlblog.Maper.AdminMapper;
 import com.github.fuckcpp.purlblog.Service.AdminService;
-import com.github.fuckcpp.purlblog.bean.Admin;
+import com.github.fuckcpp.purlblog.pojo.Admin.Admin;
 import org.springframework.stereotype.Service;
 
 @Service
